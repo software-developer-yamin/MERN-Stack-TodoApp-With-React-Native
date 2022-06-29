@@ -1,0 +1,6 @@
+/mobile/node_modules
+
+/server/node_modules
+/server/config/config.env
+.env
+.env.local
