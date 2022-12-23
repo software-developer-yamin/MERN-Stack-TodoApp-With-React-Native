@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectDatabase } from "./config/database.js";
+import mongoose from "mongoose";
 import router from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
@@ -30,9 +30,6 @@ app.use(
   })
 );
 
-// database connection
-connectDatabase();
-
 // import routes and use them in the app
 app.get("/", (req, res) => {
   res.send("Server is running");
@@ -40,7 +37,14 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", router);
 
-// listening on port process.env.PORT
-app.listen(process.env.PORT, () =>
-  console.log(`Server started on port ${process.env.PORT}`)
-);
+/* MONGOOSE SETUP */
+const PORT = process.env.PORT || 9000;
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+  })
+  .catch((error) => console.log(`${error} did not connect`));
