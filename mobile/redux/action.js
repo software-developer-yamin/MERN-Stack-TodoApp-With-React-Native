@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverUrl = "https://todo-app-server-for-free-bd.herokuapp.com/api/v1";
+const serverUrl = "";
 
 export const login = (email, password) => async (dispatch) => {
   try {
